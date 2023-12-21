@@ -1,4 +1,4 @@
-﻿@model IEnumerable<MvcMovie.Models.Movie>
+﻿@model MvcMovie.Models.MovieGenreViewModel
 
 @{
     ViewData["Title"] = "Index";
@@ -9,26 +9,43 @@
 <p>
     <a asp-action="Create">Create New</a>
 </p>
+
+<form asp-controller="Movies" asp-action="Index" method="get">
+    <p>
+        <select asp-for="MovieGenre" asp-items="Model.Genres">
+            <option value="">All</option>
+        </select>
+
+        Title: <input type ="text" name="SearchString" />
+        <input type="submit" value="Filter" />
+    </p>
+</form>
 <table class="table">
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.Title)
+                @Html.DisplayNameFor(model => model.Movies![0].Title)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Director)
+                @Html.DisplayNameFor(model => model.Movies![0].Director)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.ReleaseDate)
+                @Html.DisplayNameFor(model => model.Movies![0].Genre)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.MadeProfit)
+                @Html.DisplayNameFor(model => model.Movies![0].ReleaseDate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Movies![0].Rating)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Movies![0].MadeProfit)
             </th>
             <th></th>
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model) {
+@foreach (var item in Model.Movies!) {
         <tr>
             <td>
                 @Html.DisplayFor(modelItem => item.Title)
@@ -37,7 +54,13 @@
                 @Html.DisplayFor(modelItem => item.Director)
             </td>
             <td>
+                @Html.DisplayFor(modelItem => item.Genre)
+            </td>
+            <td>
                 @Html.DisplayFor(modelItem => item.ReleaseDate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Rating)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.MadeProfit)
